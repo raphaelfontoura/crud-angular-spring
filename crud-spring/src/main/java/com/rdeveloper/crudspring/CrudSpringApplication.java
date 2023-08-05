@@ -19,11 +19,11 @@ public class CrudSpringApplication {
   CommandLineRunner initDatabase(CourseRepository courseRepository) {
     return args -> {
       courseRepository.deleteAll();
-      Course c = new Course();
-      c.setName("Angular com Spring");
-      c.setCategory("Front-end");
+      Course course = new Course();
+      course.setName("Angular com Spring");
+      course.setCategory("Front-end");
 
-      courseRepository.save(c);
+      courseRepository.save(course);
     };
   }
 
