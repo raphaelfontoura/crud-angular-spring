@@ -1,7 +1,7 @@
 import { CoursesService } from './../services/courses.service';
 import { Course } from './../model/course';
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { UntypedFormBuilder, UntypedFormGroup } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Location } from '@angular/common';
 
@@ -12,9 +12,9 @@ import { Location } from '@angular/common';
 })
 export class CourseFormComponent implements OnInit {
 
-  form: FormGroup;
+  form: UntypedFormGroup;
 
-  constructor(private fb: FormBuilder,
+  constructor(private fb: UntypedFormBuilder,
     private service: CoursesService,
     private snackBar: MatSnackBar,
     private location: Location) {
