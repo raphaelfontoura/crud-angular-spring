@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import com.rdeveloper.crudspring.exception.RecordNotFoundException;
 import com.rdeveloper.crudspring.model.Course;
 import com.rdeveloper.crudspring.repository.CourseRepository;
 
@@ -28,7 +29,7 @@ public class CourseService {
   }
 
   public Course findById(@NotNull @Positive Long id) {
-    return courseRepository.findById(id).orElseThrow(() -> new EntityNotFoundException("Course not found"));
+    return courseRepository.findById(id).orElseThrow(() -> new RecordNotFoundException(id));
   }
 
   public Course create(@Valid Course course) {
@@ -42,16 +43,14 @@ public class CourseService {
           recordFound.setCategory(course.getCategory());
           return courseRepository.save(recordFound);
         })
-        .orElseThrow(() -> new EntityNotFoundException("Course not found"));
+        .orElseThrow(() -> new RecordNotFoundException(id));
   }
 
-  public boolean delete(@NotNull @Positive Long id) {
-    return courseRepository.findById(id)
-        .map(recordFound -> {
-          courseRepository.deleteById(id);
-          return true;
-        })
-        .orElse(false);
+  public void delete(@NotNull @Positive Long id) {
+
+    courseRepository.delete(courseRepository.findById(id)
+        .orElseThrow(() -> new RecordNotFoundException(id)));
+
   }
 
 }
