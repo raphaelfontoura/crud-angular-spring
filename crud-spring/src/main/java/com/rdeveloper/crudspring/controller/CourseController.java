@@ -1,5 +1,6 @@
 package com.rdeveloper.crudspring.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
@@ -14,13 +15,16 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import com.rdeveloper.crudspring.model.Course;
 import com.rdeveloper.crudspring.service.CourseService;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+
 
 @Validated
 @RestController
@@ -60,6 +64,20 @@ public class CourseController {
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable @NotNull @Positive Long id) {
     courseService.delete(id);
+  }
+
+  @PostMapping("redirect")
+  public ResponseEntity<Void> redirectUrl(@RequestBody @Valid Course course, HttpServletResponse response) {
+    var result = courseService.create(course);
+    var uri = UriComponentsBuilder.fromUriString("https://google.com/search?q={course}")
+      .build(result.getName());
+    try {
+      response.sendRedirect(uri.toString());
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    return ResponseEntity.created(uri).build();
   }
 
 }

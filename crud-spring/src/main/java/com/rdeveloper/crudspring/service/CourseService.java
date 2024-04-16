@@ -3,13 +3,13 @@ package com.rdeveloper.crudspring.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import com.rdeveloper.crudspring.exception.RecordNotFoundException;
 import com.rdeveloper.crudspring.model.Course;
 import com.rdeveloper.crudspring.repository.CourseRepository;
 
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
