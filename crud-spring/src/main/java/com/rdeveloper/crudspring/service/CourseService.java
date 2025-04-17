@@ -3,7 +3,6 @@ package com.rdeveloper.crudspring.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 
 import com.rdeveloper.crudspring.exception.RecordNotFoundException;

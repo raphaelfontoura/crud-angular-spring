@@ -45,8 +45,6 @@ public class CourseController {
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public Course createCourse(@RequestBody @Valid Course course) {
-    // return
-    // ResponseEntity.status(HttpStatus.CREATED).body(courseRepository.save(course));
     return courseService.create(course);
   }
 
