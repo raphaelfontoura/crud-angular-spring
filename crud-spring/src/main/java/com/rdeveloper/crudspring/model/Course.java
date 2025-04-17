@@ -1,7 +1,10 @@
 package com.rdeveloper.crudspring.model;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,6 +17,8 @@ import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.rdeveloper.crudspring.enums.Category;
+import com.rdeveloper.crudspring.enums.converters.CategoryConverter;
 
 import lombok.Data;
 
@@ -34,10 +39,9 @@ public class Course {
   private String name;
 
   @NotNull
-  @Size(max = 10)
-  @Pattern(regexp = "back-end|front-end")
   @Column(length = 20, nullable = false)
-  private String category;
+  @Convert(converter = CategoryConverter.class)
+  private Category category;
 
   @NotNull
   @Size(max = 10)

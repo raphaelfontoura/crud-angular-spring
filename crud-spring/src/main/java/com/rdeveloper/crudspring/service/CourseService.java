@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
 import com.rdeveloper.crudspring.dto.CourseDTO;
+import com.rdeveloper.crudspring.enums.Category;
 import com.rdeveloper.crudspring.exception.RecordNotFoundException;
 import com.rdeveloper.crudspring.mapper.CourseMapper;
 import com.rdeveloper.crudspring.model.Course;
@@ -48,7 +49,7 @@ public class CourseService {
         return courseRepository.findById(id)
                 .map(recordFound -> {
                     recordFound.setName(course.name());
-                    recordFound.setCategory(course.category());
+                    recordFound.setCategory(Category.fromValue(course.category()));
                     return courseMapper.toDTO(courseRepository.save(recordFound));
                 })
                 .orElseThrow(() -> new RecordNotFoundException(id));
