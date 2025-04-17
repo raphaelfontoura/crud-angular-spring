@@ -12,6 +12,6 @@ public record CourseDTO(
 
         @NotBlank @NotNull @Size(min = 5, max = 100) String name,
 
-        @NotNull @Size(max = 10) @Pattern(regexp = "Back-end|Front-end") String category) {
+        @NotNull @Size(max = 10) @Pattern(regexp = "back-end|front-end") String category) {
 
 }

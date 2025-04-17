@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
-import com.rdeveloper.crudspring.model.Course;
+import com.rdeveloper.crudspring.dto.CourseDTO;
 import com.rdeveloper.crudspring.service.CourseService;
 
 import jakarta.servlet.http.HttpServletResponse;
@@ -38,23 +38,23 @@ public class CourseController {
   }
 
   @GetMapping
-  public List<Course> getCourses() {
+  public List<CourseDTO> getCourses() {
     return courseService.list();
   }
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public Course createCourse(@RequestBody @Valid Course course) {
+  public CourseDTO createCourse(@RequestBody @Valid CourseDTO course) {
     return courseService.create(course);
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Course> getCourseById(@PathVariable @NotNull @Positive Long id) {
+  public ResponseEntity<CourseDTO> getCourseById(@PathVariable @NotNull @Positive Long id) {
     return ResponseEntity.ok().body(courseService.findById(id));
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Course> update(@PathVariable @NotNull @Positive Long id, @RequestBody @Valid Course course) {
+  public ResponseEntity<CourseDTO> update(@PathVariable @NotNull @Positive Long id, @RequestBody @Valid CourseDTO course) {
     return ResponseEntity.ok().body(courseService.update(id, course));
   }
 
@@ -65,10 +65,10 @@ public class CourseController {
   }
 
   @PostMapping("redirect")
-  public ResponseEntity<Void> redirectUrl(@RequestBody @Valid Course course, HttpServletResponse response) {
+  public ResponseEntity<Void> redirectUrl(@RequestBody @Valid CourseDTO course, HttpServletResponse response) {
     var result = courseService.create(course);
     var uri = UriComponentsBuilder.fromUriString("https://google.com/search?q={course}")
-      .build(result.getName());
+      .build(result.name());
     try {
       response.sendRedirect(uri.toString());
     } catch (IOException e) {
