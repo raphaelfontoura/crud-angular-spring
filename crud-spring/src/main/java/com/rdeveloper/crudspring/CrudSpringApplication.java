@@ -28,6 +28,8 @@ public class CrudSpringApplication {
       Lesson lesson = new Lesson();
       lesson.setName("Introdução ao Angular");
       lesson.setYoutubeUrl("2j0v1g3q4a8");
+      lesson.setCourse(course);
+      
       course.getLessons().add(lesson);
 
       courseRepository.save(course);
