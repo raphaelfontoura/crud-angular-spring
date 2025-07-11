@@ -1,8 +1,10 @@
 package com.rdeveloper.crudspring.controller;
 
 import java.io.IOException;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -19,6 +21,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 
 import com.rdeveloper.crudspring.dto.CourseDTO;
 import com.rdeveloper.crudspring.service.CourseService;
+import com.rdeveloper.crudspring.validation.ValidPageableSize;
 
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -38,7 +41,7 @@ public class CourseController {
   }
 
   @GetMapping
-  public Page<CourseDTO> getCourses(Pageable pageable) {
+  public Page<CourseDTO> getCourses(@Valid @ValidPageableSize Pageable pageable) {
     return courseService.list(pageable);
   }
 

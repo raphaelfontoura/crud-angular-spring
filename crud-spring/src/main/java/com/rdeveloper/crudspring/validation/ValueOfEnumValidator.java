@@ -1,4 +1,4 @@
-package com.rdeveloper.crudspring.enums.validation;
+package com.rdeveloper.crudspring.validation;
 
 import java.util.List;
 import java.util.stream.Stream;

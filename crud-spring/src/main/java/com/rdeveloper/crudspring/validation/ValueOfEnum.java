@@ -1,4 +1,4 @@
-package com.rdeveloper.crudspring.enums.validation;
+package com.rdeveloper.crudspring.validation;
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.CONSTRUCTOR;

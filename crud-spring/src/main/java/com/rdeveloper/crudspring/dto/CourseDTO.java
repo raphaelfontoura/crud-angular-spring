@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.rdeveloper.crudspring.enums.Category;
-import com.rdeveloper.crudspring.enums.validation.ValueOfEnum;
+import com.rdeveloper.crudspring.validation.ValueOfEnum;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
