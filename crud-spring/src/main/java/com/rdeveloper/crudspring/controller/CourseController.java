@@ -1,8 +1,8 @@
 package com.rdeveloper.crudspring.controller;
 
 import java.io.IOException;
-import java.util.List;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -38,8 +38,8 @@ public class CourseController {
   }
 
   @GetMapping
-  public List<CourseDTO> getCourses() {
-    return courseService.list();
+  public Page<CourseDTO> getCourses(Pageable pageable) {
+    return courseService.list(pageable);
   }
 
   @PostMapping

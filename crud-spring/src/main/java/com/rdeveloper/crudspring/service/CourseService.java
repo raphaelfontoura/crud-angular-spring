@@ -2,6 +2,8 @@ package com.rdeveloper.crudspring.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
@@ -28,11 +30,9 @@ public class CourseService {
         this.courseMapper = courseMapper;
     }
 
-    public List<CourseDTO> list() {
-        return courseRepository.findAll()
-                .stream()
-                .map(courseMapper::toDTO)
-                .toList();
+    public Page<CourseDTO> list(Pageable pageable) {
+        return courseRepository.findAll(pageable)
+                .map(courseMapper::toDTO);
     }
 
     public CourseDTO findById(@NotNull @Positive Long id) {
