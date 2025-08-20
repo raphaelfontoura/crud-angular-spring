@@ -1,7 +1,9 @@
 package com.rdeveloper.crudspring.controller;
 
-import java.util.List;
+import java.io.IOException;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -14,13 +16,17 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.util.UriComponentsBuilder;
 
-import com.rdeveloper.crudspring.model.Course;
+import com.rdeveloper.crudspring.dto.CourseDTO;
 import com.rdeveloper.crudspring.service.CourseService;
+import com.rdeveloper.crudspring.validation.ValidPageableSize;
 
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+
 
 @Validated
 @RestController
@@ -34,25 +40,23 @@ public class CourseController {
   }
 
   @GetMapping
-  public List<Course> getCourses() {
-    return courseService.list();
+  public Page<CourseDTO> getCourses(@Valid @ValidPageableSize Pageable pageable) {
+    return courseService.list(pageable);
   }
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public Course createCourse(@RequestBody @Valid Course course) {
-    // return
-    // ResponseEntity.status(HttpStatus.CREATED).body(courseRepository.save(course));
+  public CourseDTO createCourse(@RequestBody @Valid CourseDTO course) {
     return courseService.create(course);
   }
 
   @GetMapping("/{id}")
-  public ResponseEntity<Course> getCourseById(@PathVariable @NotNull @Positive Long id) {
+  public ResponseEntity<CourseDTO> getCourseById(@PathVariable @NotNull @Positive Long id) {
     return ResponseEntity.ok().body(courseService.findById(id));
   }
 
   @PutMapping("/{id}")
-  public ResponseEntity<Course> update(@PathVariable @NotNull @Positive Long id, @RequestBody @Valid Course course) {
+  public ResponseEntity<CourseDTO> update(@PathVariable @NotNull @Positive Long id, @RequestBody @Valid CourseDTO course) {
     return ResponseEntity.ok().body(courseService.update(id, course));
   }
 
@@ -60,6 +64,20 @@ public class CourseController {
   @ResponseStatus(HttpStatus.NO_CONTENT)
   public void delete(@PathVariable @NotNull @Positive Long id) {
     courseService.delete(id);
+  }
+
+  @PostMapping("redirect")
+  public ResponseEntity<Void> redirectUrl(@RequestBody @Valid CourseDTO course, HttpServletResponse response) {
+    var result = courseService.create(course);
+    var uri = UriComponentsBuilder.fromUriString("https://google.com/search?q={course}")
+      .build(result.name());
+    try {
+      response.sendRedirect(uri.toString());
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+
+    return ResponseEntity.created(uri).build();
   }
 
 }

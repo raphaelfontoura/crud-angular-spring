@@ -1,0 +1,58 @@
+###
+
+GET http://localhost:8080/api/courses
+
+
+###
+
+GET http://localhost:8080/api/courses/2
+
+###
+
+POST http://localhost:8080/api/courses
+Content-Type: application/json
+
+{
+    "name": "Curso de Angular",
+    "category": "front-end",
+    "lessons": [
+        {
+            "name": "Introdução ao Angular",
+            "youtubeUrl": "watch?v=01"
+        },
+        {
+            "name": "Componentes no Angular",
+            "youtubeUrl": "watch?v=02"
+        }
+    ]
+}
+
+###
+
+PUT http://localhost:8080/api/courses/2
+Content-Type: application/json
+
+{
+    "_id": 2,
+    "name": "Curso de Angular - atualizado",
+    "category": "front-end",
+    "lessons": [
+        {
+            "name": "Introdução ao Angular - atualizado",
+            "youtubeUrl": "watch?v=01"
+        },
+        {
+            "name": "Componentes no Angular - atualizado",
+            "youtubeUrl": "watch?v=02"
+        },
+        {
+            "name": "Serviços no Angular",
+            "youtubeUrl": "watch?v=03"
+        }
+    ]
+}
+
+###
+DELETE http://localhost:8080/api/courses/2
+
+###
